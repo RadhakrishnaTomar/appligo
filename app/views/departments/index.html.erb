@@ -1,0 +1,51 @@
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Departments</h1>
+    <% if policy(:Department).create? %>
+      <%= link_to new_department_path, class: "d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split shadow-sm" do %>
+        <span class="icon text-white-50">
+          <i class="fas fa-plus fa-sm"></i>
+        </span>
+        <span class="text">New Department</span>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="table-responsive shadow">
+    <table class="table table-bordered table-go">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Action</th>                 
+        </tr>
+      </thead>
+      <tbody class="table-tbody">
+        <% @departments.each do |department| %>
+          <tr>
+            <td class="sort-name"><%= department.name %></td>
+            <td class="actions">
+              <% if policy(:Department).read? %>
+                <%= link_to department_path(department.id) do %>
+                  <i class="fa fa-eye"></i>
+                <% end %>
+              <%end%>
+              
+              <% if policy(:Department).update? %>
+                <%= link_to edit_department_path(department.id), class: "text-warning" do %>
+                  <i class="fa fa-edit"></i>
+                <% end %>
+              <%end%>
+
+              <% if policy(:Department).delete? %>
+                <%= link_to department_path(department.id), data: {turbo_method: :delete  , turbo_confirm: 'Are you sure?'}, class: "text-danger" do %>
+                  <i class="fa fa-trash"></i>
+                <% end %>
+              <%end%>
+            </td>                    
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

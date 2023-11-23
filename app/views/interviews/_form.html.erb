@@ -1,0 +1,72 @@
+<div class="page-wrapper">
+  <!-- Page body -->
+  <div class="page-body">
+    <div class="container-xl">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Schedule Interview</h3>
+        </div>
+
+        <%= form_with(model: @interview, url: applicant_interviews_path(@applicant, @interview), local: true, class: "card",data: { turbo: false }) do |f| %>
+        <div class="card-body">
+          <div class="row row-cards">
+            <%@interview.errors.full_messages_for(:title).each do |message| %>
+            <div><%= message %></div>
+            <%end%>
+            <div class="col-md-5">
+              <div class="mb-3">
+                <%= f.label :title, class: "form-label" %>
+                <%= f.text_field :title, :placeholder => "Enter Interview Title" , class: "form-control"%> 
+              </div>
+            </div>
+            <%@interview.errors.full_messages_for(:interview_date).each do |message| %>
+            <div><%= message %></div>
+            <%end%>
+            <div class="col-md-5">
+              <div class="mb-3">
+                <%= f.label :interview_date, class: "form-label" %>
+                <%= f.datetime_field :interview_date, :placeholder => "Enter Schedule Date" , class: "form-control" , ampm: true , :prefix => :start_date%> 
+              </div>
+            </div>
+            <%@interview.errors.full_messages_for(:status).each do |message| %>
+            <div><%= message %></div>
+            <%end%>
+            <div class="col-md-5">
+              <div class="mb-3">
+                <%= f.label :status, class: "form-label" %>
+                <%= f.select :status, options_for_select(Interview.statuses.keys), { prompt: 'Select a status' }, class: 'form-control', id: 'role-dropdown' %>
+              </div>
+            </div>
+            <%@interview.errors.full_messages_for(:team_member_id).each do |message| %>
+            <div><%= message %></div>
+            <%end%>
+            <div class="col-md-5">
+              <div class="mb-3">
+                <%= f.label :team_member_id, value: "Select Team member", class: "form-label" %>
+                <%= f.select :team_member_id, options_from_collection_for_select(current_company.team_members.all, :id, :name), { prompt: 'Select a team member' }, class: 'form-control', id: 'team-member-dropdown' %>
+
+              </div>                                        
+            </div>
+
+            <div class="col-md-5">
+              <div class="mb-3">
+                <%= f.fields_for :comments do |comment_form| %>
+                  <%= comment_form.label :content,value: "comment", class: "form-label" %>
+                  <%= comment_form.text_field :content, class: "form-control", placeholder: "comment" %>
+                  <%= comment_form.hidden_field :team_member_id, value: current_team_member.id %>
+                <% end %>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="card-footer text-end">    
+          <%= f.submit "Submit", class: "btn btn-primary" %>
+        </div>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>

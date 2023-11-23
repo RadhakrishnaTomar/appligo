@@ -1,0 +1,39 @@
+<%= form_with model: @company, url: permissions_setter_company_permissions_path(@company), method: :post do |form| %>
+  <%= form.hidden_field :role, value: @role %>
+  <table class="table table-bordered table-go">
+    <thead>
+      <tr>
+        <th>Model</th>
+        <th class="text-center">Read</th>
+        <th class="text-center">Create</th>
+        <th class="text-center">Update</th>
+        <th class="text-center">Delete</th>          
+      </tr>
+    </thead>
+    <tbody class="table-tbody">
+      
+      <%= form.fields_for :permissions, company_permissions(@company) do |permission| %>
+        <tr>
+          <%= permission.hidden_field :id %>
+          <%= permission.hidden_field :role_id %>
+          <%= permission.hidden_field :model_title %>
+          <td><%= permission.object.model_title %></td>
+          <td class="text-center"><%=permission.check_box :read_p  %></td>
+          <td class="text-center"><%=permission.check_box :create_p %></td>
+          <td class="text-center"><%=permission.check_box :update_p %></td>
+          <td class="text-center"><%=permission.check_box :delete_p %></td>
+        </tr>
+      <%end%>
+    </tbody>
+    <tfoot>
+      <tr>
+        <div class="d-flex justify-content-end">
+          <%# if policy(:Permission).update? %>
+            <td colspan="5" class="text-end"><%= form.submit "Submit", class: "btn btn-sm btn-primary shadow-sm" %></td>
+          <%#end%>
+        </div>
+      </tr>
+    </tfoot>
+  </table>
+<%end%>
+

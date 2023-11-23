@@ -1,0 +1,49 @@
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Roles</h1>
+    <%if policy(:Role).create?%>
+      <%= link_to new_role_path, class: "d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split shadow-sm" do %>
+        <span class="icon text-white-50">
+          <i class="fas fa-user-plus fa-sm"></i>
+        </span>
+        <span class="text">Create Role</span>
+      <% end %>
+    <%end%>
+  </div>
+
+  <div class="table-responsive shadow">
+    <table class="table table-bordered table-go">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody class="table-tbody">
+         <% @roles.each do |role| %>
+        <tr>
+          <td class="sort-designation_name"><%= role.name %></td>
+          <td class="actions">
+            <%if policy(:Role).read?%>
+              <%= link_to role_path(role.id) do %>
+                <i class="fa fa-eye"></i>
+              <% end %>
+            <% end %>
+            <%if policy(:Role).update?%>
+              <%= link_to  "/roles/#{role.id}/edit", class: "text-warning" do %>
+                <i class="fa fa-edit"></i>
+              <% end %>
+            <% end %>
+            <%if policy(:Role).delete?%>
+              <%= link_to  "/roles/#{role.id}" , data: {turbo_method: :delete  , turbo_confirm: 'Are you sure?'}, class: "text-danger" do %>
+                <i class="fa fa-trash"></i>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

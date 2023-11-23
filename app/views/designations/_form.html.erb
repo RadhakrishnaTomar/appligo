@@ -1,0 +1,32 @@
+<div class="page-wrapper">
+  <!-- Page body -->
+  <div class="page-body">
+    <div class="container-xl">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Edit Designation</h3>
+        </div>
+        <%= form_with model: @designation, local:true, url: url, class: "card" do |form| %>
+          <div class="card-body">
+            <div class="row row-cards">
+              <%@designation.errors.full_messages_for(:name).each do |message| %>
+                <div><%= message %></div>
+              <%end%>
+              <div class="col-md-5">
+                <div class="mb-3">
+                  <%= form.label :name, class: "form-label" %>
+                  <%= form.text_field :name, class: "form-control", placeholder: "Enter Designation Name" %>                  
+                </div>
+              </div>              
+            </div>
+          </div>
+        
+          <div class="card-footer text-end">    
+            <%= form.submit "Update", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,236 @@
+<div>
+  <div class="card shadow">
+    <div class="card-header align-items-center">
+      <h6 class="m-0 font-weight-bold text-primary">Applicant Filter</h6>
+    </div>
+    <%= form_tag(applicants_path, method: "get") do %>
+    <div class="card-body">
+        <div class="row row-cards">
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">            
+            <div class=" mb-3">
+              <%= text_field_tag :search, params[:search],class:"form-control", placeholder: "Search" %>
+            </div>
+            <div class="form-label mb-3">
+              <%= text_field_tag :email, params[:email], class:"form-control",placeholder: "Enter Email" %>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class=" mb-3">
+              <%= text_field_tag :contact_number, params[:contact_number], class:"form-control",placeholder: "Enter Contact Number" %>
+            </div>
+            <div class=" mb-3">
+              <%= text_field_tag :open_for, params[:open_for],class:"form-control",class:"form-control",placeholder: "Enter open for WFH/WFO" %>
+            </div>
+          </div>
+            <div class="col-lg-3 col-md-3">
+               <div class=" mb-3">
+              <%= text_field_tag :location, params[:location], class:"form-control",placeholder: "Enter Location" %>
+            </div>
+              <div class=" mb-3">
+              <%= submit_tag("Filter", class: "btn btn-outline-info ml-2") %>
+              <%= link_to "Clear data", applicants_path, class: "btn btn-outline-success ml-3 clear_data" %>
+            </div>
+            </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<% if @setting.applicantseditableview == true%>
+<table>
+    <div>
+      <input type="checkbox" id="toggleEditability" /> Toggle Editability</input>
+    </div>
+    <div id="spreadsheet"> 
+      <style>
+          .jexcel{
+            table-layout: auto;
+          }
+      </style>
+  </div>
+</table>
+<% else %>
+<table class="table table-bordered table-go">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Designation Name</th>
+        <th>Contact number</th>
+        <th>email</th>
+        <th>current location</th>
+        <th>last/current salary</th>
+        <th>expected salary</th>
+        <th>Notice period</th>
+        <th>open for wfh/wfo</th>
+        <th>source</th>
+        <th>remark</th>
+        <th>hometown</th>
+        <th>last_company</th>
+        <th>experience</th>
+        <th>relevant_expereince</th>
+        <th>reason</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody class="table-tbody">
+      <% @applicants.each do |applicant| %>
+        <tr>
+          <td class="sort-name"><%= applicant.name %></td>
+          <td class="sort-designation_name"><%=applicant.profile&.name%></td>
+          <td class="sort-contact_number"><%=applicant.contact_number%></td>
+          <td class="sort-email"><%=applicant.email%></td>
+          <td class="sort-location"><%=applicant.location%></td>
+          <td class="sort-current_ctc"><%=applicant.current_ctc%></td>
+          <td class="sort-expected_ctc"><%=applicant.expected_ctc%></td>
+          <td class="sort-notice_period"><%=applicant.notice_period%></td>
+          <td class="sort-open_for"><%=applicant.open_for%></td>
+          <td class="sort-source"><%=applicant.source%></td>
+          <td class="sort-source"><%=applicant.remark%></td>
+          <td class="sort-source"><%=applicant.hometown%></td>
+          <td class="sort-source"><%=applicant.last_company%></td>
+          <td class="sort-source"><%=applicant.experience%></td>
+          <td class="sort-source"><%=applicant.relevant_expereince%></td>
+          <td class="sort-source"><%=applicant.reason%></td>
+          <td class="actions">
+            <% if policy(:Applicant).read? %>
+              <%= link_to applicant_path(applicant.id) do %>
+                <i class="fa fa-eye"></i>
+              <% end %>
+            <%end%>
+            <% if policy(:Applicant).update? %>
+              <%= link_to edit_applicant_path(applicant.id), class: "text-warning" do %>
+                <i class="fa fa-edit"></i>
+              <% end %>
+            <% end %>
+            <% if policy(:Applicant).delete? %>
+              <%= link_to applicant_path(applicant.id), data: {turbo_method: :delete  , turbo_confirm: 'Are you sure?'}, class: "text-danger" do %>
+                <i class="fa fa-trash"></i>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+<%= render 'layouts/flash' %>
+
+<script>
+  var data = [];  
+  var designations = <%= current_company.profiles.map{|e| {id: e.id, name: e.name }}.to_json.html_safe %>;
+  <% @applicants.each do |applicant| %>
+  data.push([
+    <%= applicant.id.to_json.html_safe %>,
+    <%= applicant.name.to_json.html_safe %>, 
+    <%= applicant.profile&.id.to_s.to_json.html_safe %>, 
+    <%= applicant.contact_number.to_json.html_safe %>,
+    <%= applicant.email.to_json.html_safe %>,
+    <%= applicant.location.to_json.html_safe %>,
+    <%= applicant.current_ctc.to_json.html_safe %>,
+    <%= applicant.expected_ctc.to_json.html_safe %>,
+    <%= applicant.notice_period.to_json.html_safe %>,
+    <%= applicant.open_for.to_json.html_safe %>,
+    <%= applicant.source.to_json.html_safe %>,
+    <%= applicant.remark.to_json.html_safe %>,
+    <%= applicant.hometown.to_json.html_safe %>,
+    <%= applicant.last_company.to_json.html_safe %>,
+    <%= applicant.experience.to_json.html_safe %>,
+    <%= applicant.relevant_expereince.to_json.html_safe %>,
+    <%= applicant.reason.to_json.html_safe %>,
+    ["<a href='<%= applicant_path(applicant.id)%>'><i class='fa fa-eye'></i</a>"]
+    ]);
+  <% end %>
+  $(document).ready(function() {
+    var isEditable = false;
+    var spreadsheet;
+    function createJExcelInstance() {
+      var columnConfig = [];
+      for (var i = 0; i < data[0].length; i++) {
+        if(i===0){
+          columnConfig.push({
+                 type: 'text',
+                 readOnly: true,
+            });
+        }
+        else if (i === 2) {
+            columnConfig.push({
+            type: 'dropdown',
+            source: designations,
+            readOnly: !isEditable
+            });
+        } else if(i===17) {
+                  columnConfig.push({
+                 type: 'html',
+                 readOnly: true
+            });
+        } else {
+                columnConfig.push({
+                type: 'text',
+                readOnly: !isEditable
+              });
+        }
+    }
+      if(spreadsheet) {
+        spreadsheet.destroy();
+      }
+      var colHeades  = ["ID","Name", "Designation", "Contact Number", "Email", "Location", "Current CTC", "Expected CTC", "Notice Period", "Open For", "Source", "Remark", "Hometown", "Last Company", "Experience", "Relevant Experience", "Reason","Action"];
+
+    spreadsheet = jspreadsheet(document.getElementById('spreadsheet'), {
+      data: data,
+      designations: designations,
+      colHeaders: colHeades,
+      columns: columnConfig,
+      colWidths: [100, 150, 100, 150, 150, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,100],
+      onchange: handleCellChange
+  });
+
+      $('#spreadsheet .jexcel thead tr td[data-x="0"]').css('display', 'none');
+      $('#spreadsheet .jexcel tbody td[data-x="0"]').css('display', 'none');
+    } 
+    $('#toggleEditability').change(function() {
+        isEditable = this.checked;
+        createJExcelInstance();
+        //$('#spreadsheet .jexcel tbody td[data-x="0"]').css('display', 'none');
+    });
+
+    createJExcelInstance();
+  });
+ 
+  function handleCellChange(el, cell, x, y, newValue, oldValue) {
+    const updatedRowData = data[y];
+    handleRowChange(updatedRowData);
+  }
+
+  function handleRowChange(updatedRowData) {
+    $.ajax({
+      url: '/applicants/' + updatedRowData[0],
+      method: 'PATCH',
+      data: {
+      applicant:{
+      name: updatedRowData[1],
+      profile_id: updatedRowData[2],
+      contact_number: updatedRowData[3],
+      email: updatedRowData[4],
+      location: updatedRowData[5],
+      current_ctc: updatedRowData[6],
+      expected_ctc: updatedRowData[7],
+      notice_period: updatedRowData[8],
+      open_for: updatedRowData[9],
+      source: updatedRowData[10],
+      remark: updatedRowData[11],
+      hometown: updatedRowData[12],
+      last_company: updatedRowData[13],
+      experience: updatedRowData[14],
+      relevant_expereince:  updatedRowData[15],
+      reason: updatedRowData[16],
+    } 
+  }, 
+    success: function(response) {
+      console.log('Data updated successfully:', response);
+    },
+      error: function(error) {
+        console.error('Error updating data:', error);
+      }
+    });
+   }
+</script>

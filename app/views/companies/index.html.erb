@@ -1,0 +1,23 @@
+<!-- index.html.erb -->
+<% @companies.each do |company| %>
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-5">
+          <% if company.logo.attached? %>
+            <div class="mb-3">
+              <%= image_tag url_for(company.logo), style: "max-width: 50%; height: auto;" %>
+            </div>
+          <% end %>
+          <h5><%= company.name %></h5>
+          <p><%= company.location %></p>
+          <p><strong>Website:</strong> <%= company.website_url %></p>
+          <p><strong>LinkedIn:</strong> <%= company.linkedin_url %></p>
+          <p><strong>Facebook:</strong> <%= company.facebook_url %></p>
+          <p><strong>Number of Employees:</strong> <%= company.number_of_employees %></p>
+          <p><strong>Industry Type:</strong> <%= company.industry_type %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

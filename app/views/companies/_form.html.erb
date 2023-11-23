@@ -1,0 +1,65 @@
+    <!-- Card Body -->
+    <%= form_with model: company, local:true, url: @url, class: "card" do |form| %>
+      <div class="card-body">
+      <% if company.errors.any? %>
+        <div class="alert alert-danger">
+          <h4 class="alert-heading">Validation errors:</h4>
+          <ul>
+            <% company.errors.each do |attribute, error| %>
+              <li><%= "#{attribute.options[:message]}" %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+        <div class="row row-cards">
+          <div class="col-md-5">
+            <div class="mb-3">
+              <%= form.label :logo, class: "form-label" %>
+              <%= form.file_field :logo, class: "form-control", accept: "image/*" %>
+            </div>
+            <% if company.logo.attached? %>
+              <div class="mb-3">
+                <label>Uploaded Company Logo</label><br>
+                <%= image_tag url_for(company.logo), style: "max-width: 50%; height: auto;" %>
+              </div>
+            <% end %>
+            <div class="mb-3">
+              <%= form.label :name, class: "form-label" %>
+              <%= form.text_field :name, class: "form-control", placeholder: "Enter Company Name" %>
+            </div>
+            <div class="mb-3">
+              <%= form.label :location, class: "form-label" %>
+              <%= form.text_field :location, class: "form-control", placeholder: "Enter Company Location" %>
+            </div>
+            <div class="mb-3">
+              <%= form.label :website_url, class: "form-label" %>
+              <%= form.text_field :website_url, class: "form-control", placeholder: "Enter Company Website URL" %>
+            </div>
+            <div class="mb-3">
+              <%= form.label :linkedin_url, class: "form-label" %>
+              <%= form.text_field :linkedin_url, class: "form-control", placeholder: "Enter Company Linkedin URL" %>
+            </div>
+            <div class="mb-3">
+              <%= form.label :facebook_url, class: "form-label" %>
+              <%= form.text_field :facebook_url, class: "form-control", placeholder: "Enter Company Facebook URL" %>
+            </div>
+            <div class="mb-3">
+              <%= form.label :number_of_employees, class: "form-label" %>
+
+              <%= form.select :number_of_employees, options_for_select([["0 to 10", 10 ], ["10 to 20", 20], ["20 to 40", 40 ], ["40 to 100", 100 ], ["100 to 250", 250]], company.number_of_employees), {}, class: "form-control" %>
+            </div>
+            <div class="mb-3">
+              <%= form.label :industry_type, class: "form-label" %>
+
+              <%= form.select :industry_type, options_for_select(["IT", "Chemical"], company.industry_type), {}, class: "form-control" %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-footer text-end">
+        <%= form.submit class: "d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" do %>
+          <i class="fas fa-plus fa-sm text-white-50"></i>
+        <% end %>
+      </div>
+    <% end %>

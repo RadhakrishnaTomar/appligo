@@ -1,0 +1,43 @@
+
+<div class="page-wrapper">
+  <!-- Page header -->
+  <div class="page-header d-print-none">
+    <div class="">
+      <div class="row g-2 align-items-center">
+        <div class="col">
+          <h2 class="h3 mb-0 text-gray-800">
+           Team member Details
+         </h2>
+       </div>
+     </div>
+   </div>
+ </div>
+ <!-- Page body -->
+ <div class="table-responsive shadow">
+  <table class="table table-bordered table-go">
+    <thead>
+      <tr>
+        <th>Employee ID</th>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Email</th>
+        <th>Contact Number</th>
+        <th>Profile</th>
+      </tr>
+    </thead>
+    <tbody class="table-tbody">
+      <tr>
+        <td class="sort-designation_name"><%= @team_member.employee_id %></td>
+        <td class="sort-designation_name"><%= @team_member.name %></td>
+        <td class="sort-designation_name"><%= @team_member.role.name %></td>
+        <td class="sort-designation_name"><%= @team_member.email %></td>
+        <td class="sort-designation_name"><%= @team_member.contact_number %></td>
+        <td class="sort-designation_name"><%= @team_member.profile %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+<%= stylesheet_link_tag  "team_members" %>
+
+

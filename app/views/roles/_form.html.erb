@@ -1,0 +1,21 @@
+    <!-- Card Body -->
+    <%= form_with model: @role, local:true, url: @url, class: "card" do |form| %>
+      <div class="card-body">
+        <div class="row row-cards">
+          <div class="col-md-5">
+            <div class="mb-3">
+              <%= form.label :name, class: "form-label" %>
+              <%= form.text_field :name, class: "form-control", placeholder: "Enter Role Name" %>
+              <%= form.hidden_field :company_id, value: current_company.id %>
+              <%= form.hidden_field :create_by, value: current_team_member.name %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-footer text-end">
+        <%= form.submit class: "d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" do %>
+          <i class="fas fa-plus fa-sm text-white-50"></i>
+        <% end %>
+      </div>
+    <% end %>

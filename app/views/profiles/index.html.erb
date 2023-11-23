@@ -1,0 +1,49 @@
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Profiles</h1>
+    <%if policy(:Profile).create?%>
+      <%= link_to new_profile_path, class: "d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split shadow-sm" do %>
+        <span class="icon text-white-50">
+          <i class="fas fa-user-plus fa-sm"></i>
+        </span>
+        <span class="text">Create Profile</span>
+      <% end %>
+    <%end%>
+  </div>
+
+  <div class="table-responsive shadow">
+    <table class="table table-bordered table-go">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody class="table-tbody">
+         <% @profiles.each do |profile| %>
+        <tr>
+          <td class="sort-designation_name"><%= profile.name %></td>
+          <td class="actions">
+            <%if policy(:Profile).read?%>
+              <%= link_to profile_path(profile.id) do %>
+                <i class="fa fa-eye"></i>
+              <% end %>
+            <% end %>
+            <%if policy(:Profile).update?%>
+              <%= link_to  "/profiles/#{profile.id}/edit", class: "text-warning" do %>
+                <i class="fa fa-edit"></i>
+              <% end %>
+            <% end %>
+            <%if policy(:Profile).delete?%>
+              <%= link_to  "/profiles/#{profile.id}" , data: {turbo_method: :delete  , turbo_confirm: 'Are you sure?'}, class: "text-danger" do %>
+                <i class="fa fa-trash"></i>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

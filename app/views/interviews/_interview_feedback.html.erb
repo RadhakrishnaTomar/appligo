@@ -1,0 +1,24 @@
+<%= form_with model: @interview, url: feedback_update_path, method: :put do |f| %>
+  <div class="card-body">
+    <div class="row row-cards">
+      <div class="col-md-12">
+        <div class="mb-3">
+          <%= f.label :status, class: "form-label" %>
+          <%= f.select(:status, Interview.statuses.keys, {}, class: "form-control") %>                  
+        </div>
+      </div> 
+    </div>
+    <div class="col-md-12">
+      <%= f.fields_for :comments, @interview.comments.new do |ff| %>
+        <div class="mb-3">
+          <%= ff.label :content, value: "comment", class: "form-label" %>
+          <%= ff.text_area :content, class: "form-control", placeholder: "comment" %>
+          <%= ff.hidden_field :team_member_id, value: current_team_member.id %>
+        </div>
+      <% end %>  
+    </div>
+  </div>
+  <div class="card-footer text-end">    
+    <%= f.submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>

@@ -1,0 +1,48 @@
+<%= render partial: "modal_popup" %>
+
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Assigned Interviews</h1> 
+  </div>
+
+  <% if current_team_member.interviews.present? %>
+    <div class="table-responsive shadow">
+      <table class="table table-bordered table-go">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Interviewer</th>
+            <th>Applicant Name</th>
+            <th>Status</th>
+            <th>Interview Date</th>
+            <th>Comment</th>
+            <th>Action</th>                                                      
+          </tr>
+        </thead>
+        <tbody class="table-tbody">
+          <% @interviews.each do |interview| %>
+          <tr>
+            <td class="sort-name"><%= interview.title %></td>
+            <td class="sort-name"><%= interview.team_member.name %></td>
+            <td class="sort-name"><%= Applicant.find(interview.applicant_id).name %></td>
+            <td class="sort-name"><div class="<%= interview.status_color %>"><%= interview.status %></div></td>
+            <td class="sort-name"><%= interview.interview_date.strftime("%d-%m-%Y %I:%M %p") %></td>
+            <td class="sort-name"><%= interview.comments.pluck(:content).join(" ")%></td>
+
+            <td class="actions">
+              <% if policy(:Interview).create? %>
+                <%= link_to interview_feedback_path(interview), remote: true do %>
+                  <i class="fa fa-comments"></i>
+                <% end %>
+              <% end %>
+            </td>                      
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% elsif current_team_member.interviews.blank? %>
+    No Interview Assigned!
+  <% end %>
+</div>

@@ -1,0 +1,36 @@
+<div class="page-wrapper">
+  <!-- Page header -->
+  <div class="page-header d-print-none">
+    <div class="">
+      <div class="row g-2 align-items-center">
+        <div class="col">
+          <h2 class="h3 mb-0 text-gray-800">
+           Profile Details
+         </h2>
+       </div>
+     </div>
+   </div>
+ </div>
+ <!-- Page body -->
+ <div class="table-responsive shadow">
+  <table class="table table-bordered table-go">
+    <thead>
+      <tr>
+        <th>Profile</th>
+        <th>Profile Created By</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody class="table-tbody">
+      <tr>
+        <td class="sort-designation_name"><%= @profile.name %></td>
+        <td class="sort-designation_name"><%= @profile.create_by %></td>
+        <td class="sort-designation_name"><%= @profile.description %></td>
+      </tr>
+    </tbody>
+  </table>
+ </div>
+</div>
+<%= stylesheet_link_tag  "team_members" %>
+
+

@@ -1,0 +1,53 @@
+<div class="page-wrapper">
+  <!-- Page header -->
+  <div class="page-header d-print-none">
+    <div class="container-xl">
+      <div class="row g-2 align-items-center">
+        <div class="col">
+          <h2 class="page-title">
+            Interview Details
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Page body -->
+  <div class="page-body">
+    <div class="container-xl">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Interview info</h3>
+          <div class="col-auto ms-auto d-print-none">
+            <div class="btn-list">
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="datagrid">
+            <div class="datagrid-item">
+              <div class="datagrid-title">Title</div>
+              <div class="datagrid-content"><%= @interview.title %></div>
+            </div>
+            <div class="datagrid-item">
+              <div class="datagrid-title">Team member id</div>
+              <div class="datagrid-content"><%= @interview.team_member_id %></div>
+            </div>
+            <div class="datagrid-item">
+              <div class="datagrid-title">Applicant id</div>
+              <div class="datagrid-content"><%= @interview.applicant_id %></div>
+            </div>
+            <div class="datagrid-item">
+              <div class="datagrid-title">Interview Date</div>
+              <div class="datagrid-content"><%= @interview.interview_date %></div>
+            </div>
+            
+            <div class="datagrid-item">
+              <div class="datagrid-title <%= interview.status_color %>">status</div>
+              <div class="datagrid-content"><%= @interview.status%></div>
+            </div>
+          </div>
+        </div>                   
+      </div>
+    </div>
+  </div>
+</div>

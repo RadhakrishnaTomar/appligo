@@ -1,0 +1,65 @@
+<div class="page-wrapper">
+  <div class="page-header d-print-none">
+    <div class="container-xl">
+      <div class="row g-2 align-items-center">
+        <div class="col">
+          <h2 class="page-title">
+            Designations
+          </h2>
+        </div>
+        <!-- Page title actions -->
+        <div class="col-auto ms-auto d-print-none">
+          <div class="btn-list">
+            <% if policy(:Designation).create? %>
+              <%= link_to "Create Designation", new_department_designation_path, class: "btn btn-primary d-none d-sm-inline-block" %>
+            <%end%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Page body -->
+  <div class="page-body">
+    <div class="container-xl">
+      <div class="card">
+        <div class="card-body">
+          <div id="table-default" class="table-responsive">
+            <table class="table table-bordered shadow table-go">
+              <thead>
+                <tr>
+                  <th><button>Name</button></th>
+                  <th><button>Action</button></th>
+                </tr>
+              </thead>
+              <tbody class="table-tbody">
+                <% @designations.each do |designation| %>
+                  <tr>
+                    <td class="sort-name"><%= designation.name %></td>
+                    <td class="actions">
+                    <% if policy(:Designation).read? %>
+                      <%= link_to department_designation_path(id: designation.id) do %>
+                        <i class="fa fa-eye"></i>
+                      <% end %>
+                    <%end%>
+                    <% if policy(:Designation).update? %>
+                      <%= link_to edit_department_designation_path(id: designation.id), class: "text-warning" do %>
+                        <i class="fa fa-edit"></i>
+                      <% end %>
+                    <% end %>
+                    <% if policy(:Designation).delete? %>
+                      <%= link_to department_designation_path(id: designation.id), data: {turbo_method: :delete  , turbo_confirm: 'Are you sure?'}, class: "text-danger" do %>
+                        <i class="fa fa-trash"></i>
+                      <% end %>
+                    <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%= stylesheet_link_tag  "designations" %>

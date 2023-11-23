@@ -1,0 +1,9 @@
+<%= form_with url: '/create_organisation', method: :post do |f| %>
+  <div>
+    <%= f.label :applicantseditableview,'Editing View For Applicant' %>
+    <%= f.check_box :applicantseditableview,{ checked: @setting.applicantseditableview } %>
+  </div>
+  <div >
+    <%= f.submit "Submit",class:"btn btn-outline-success" %>
+  </div>
+<% end %>

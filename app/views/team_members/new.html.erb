@@ -1,0 +1,103 @@
+<div class="page-wrapper">
+  <!-- Page body -->
+  <div class="page-body">
+    <div class="container-xl">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Create member</h3>
+        </div>
+        <%= form_with(scope: :team_member,local: true,class: "card", url: create_team_member_path,data: { turbo: false }, method: :post) do |f| %>
+        
+        <div class="card-body">
+          <div class="row row-cards">
+            <%@team_member.errors.full_messages_for(:name).each do |message| %>
+            <div><%= message %></div>
+            <%end%>
+            <div class="col-md-5">
+              <div class="mb-3">
+                <%= f.label :name, class: "form-label" %>
+                <%= f.text_field :name, :placeholder => "Name" , class: "form-control"%> 
+              </div>
+            </div>              
+
+
+            <%@team_member.errors.full_messages_for(:profile).each do |message| %>
+            <div><%= message %></div>
+            <%end%>
+            <div class="col-md-5">
+              <div class="mb-3">
+                <%= f.label :profile, class: "form-label" %>
+                <%= f.select :profile, options_for_select(profile_dropdown(current_company.id)), { prompt: 'Select a Profile' }, class: 'form-control', id: 'profile-dropdown-team-member' %>
+              </div>
+            </div>              
+
+
+            <%@team_member.errors.full_messages_for(:employee_id).each do |message| %>
+            <div><%= message %></div>
+            <%end%>
+            <div class="col-md-5">
+              <div class="mb-3">
+                <%= f.label :employee_id,value: "Employee ID", class: "form-label" %>
+                <%= f.text_field :employee_id, :placeholder => "employee ID" , class: "form-control" %> 
+              </div>
+            </div>              
+            
+
+            <%@team_member.errors.full_messages_for(:email).each do |message| %>
+            <div><%= message %></div>
+            <%end%>
+            <div class="col-md-5">
+              <div class="mb-3">
+                <%= f.label :email, class: "form-label" %>
+                <%= f.text_field :email, :placeholder => "email" , class: "form-control" %> 
+              </div>
+            </div>              
+            
+            <%@team_member.errors.full_messages_for(:role_id).each do |message| %>
+            <div><%= message %></div>
+            <%end%>
+            <div class="col-md-5">
+              <div class="mb-3">
+                <%= f.label :role_id, class: "form-label" %>
+                <%= f.select :role_id, options_for_select(role_dropdown), { prompt: 'Select a Role' }, class: 'form-control', id: 'role-dropdown' %>
+              </div>
+            </div>              
+
+            <%@team_member.errors.full_messages_for(:contact_number).each do |message| %>
+            <div><%= message %></div>
+            <%end%>
+            <div class="col-md-5">
+              <div class="mb-3">
+                <%= f.label :contact_number, class: "form-label" %>
+                <%= f.text_field :contact_number, :placeholder => "contact number" , class: "form-control" %> 
+              </div>
+            </div>              
+
+            <%@team_member.errors.full_messages_for(:password).each do |message| %>
+            <div><%= message %></div>
+            <%end%>
+            <div class="col-md-5">
+              <div class="mb-3">
+                <%= f.label :password, class: "form-label" %>
+                <%= f.password_field :password, :placeholder => "password" , class: "form-control" %> 
+              </div>
+            </div>              
+
+            <div class="col-md-5">
+              <div class="mb-3">
+                <%= hidden_field_tag "team_member[company_id]", current_team_member.company.id%>
+              </div>
+            </div> 
+          </div>
+        </div>                 
+
+        
+        <div class="card-footer text-end">    
+          <%= f.submit "Update", class: "btn btn-primary" %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+

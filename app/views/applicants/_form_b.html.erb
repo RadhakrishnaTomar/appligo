@@ -1,0 +1,96 @@
+<% flash.each do |type, msg| %>
+  <div class="alert-section">
+    <% class_name = type == "alert" ? "warning" : "success" %>
+    <div class="alert alert-<%= class_name %>" role="alert">
+      <h3><%= msg %></h3>
+    </div>
+  </div>
+<% end %>
+<div class="page-wrapper">  
+  <!-- Page body -->
+  <div class="page-body">
+    <%= render "applicants/popup"%>
+    <div class="container-xl">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Upload Applicants</h3>
+        </div>  
+        <%= form_with model: @upload_bulk, scope: :bulk_upload ,remote: true, local: false, html: { multipart: true }, class: "card" do |form| %>            
+          <div class="card-body">
+            <div class="row row-cards">
+              <div class="col-md-5">
+                <div class="mb-3">
+                  <%= form.label :profile_id, class: "form-label" %>
+                  <%= form.collection_select :profile_id, @profiles, :id, :name, { prompt:'Select a Profile' }, class: 'form-control',id: 'profile-select'%>
+                </div>
+                <div class="mb-3">
+                  <%= form.label :Please_upload_file_below, class: "form-label" %>
+                  <%= form.file_field :excel_doc, class: "form-label", id: "upload", accept: ".xlsx" %></br>
+                  <p>Note: We only accept xlsx files</p>
+                  <p><%= link_to "Download for sample",'/headers_only.xlsx' %><p>
+                </div>
+              </div>              
+            </div>
+          </div>
+          <div id="mappings-form"> </div>
+          <div class="card-footer text-end"></div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
+<script>
+
+  var ExcelToJSON = function() {
+    
+    a=document.getElementById('upload').value
+    b= a.substring(a.lastIndexOf('.')+1, a.length)
+    if (b != 'xlsx' || b == ""){
+      window.location.href = "http://localhost:3000/applicant_upload_bulk/new"
+      alert ("Please attach xlsx file")
+    }
+    else{
+      this.parseExcel = function(file) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+          var data = e.target.result;
+          var workbook = XLSX.read(data, {
+            type: 'binary'
+          });
+          workbook.SheetNames.forEach(function(sheetName) {
+            // Here is your object
+            var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+            var json_object = JSON.stringify(XL_row_object);
+            var final_obj = (JSON.parse(json_object));
+            jQuery('#xlx_json').val(json_object);
+            excel_calumn_name_js = Object.keys(final_obj[0]);
+            $('#exampleModal').modal('show'); 
+            selects = document.getElementsByClassName("options_select")
+            for (var i = 0; i < selects.length; i++) {
+              for (let j = 0; j < excel_calumn_name_js.length; j++) {
+                var option = document.createElement("option");
+                option.text = excel_calumn_name_js[j];
+                selects.item(i).add(option);
+              }
+            }
+          })
+        };
+        reader.readAsBinaryString(file);
+      };
+    };
+  }
+
+  function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+    var xl2json = new ExcelToJSON();
+    xl2json.parseExcel(files[0]);
+  }
+</script>
+<script>
+  document.getElementById('upload').addEventListener('change', handleFileSelect, false);
+</script>

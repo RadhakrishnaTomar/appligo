@@ -1,0 +1,10 @@
+<div id="flash-message"></div>
+<%= render "form_b" %>
+<script>
+$("#upload").click(function() {
+    if ($("#upload").val()){
+      alert("Please select a new file for submission")
+      location.reload()
+    }
+});
+</script>

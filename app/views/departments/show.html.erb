@@ -1,0 +1,39 @@
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Department Details</h1>
+  </div>
+
+  <div class="table-responsive shadow">
+    <table class="table table-bordered table-go">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody class="table-tbody">
+        <tr>
+          <td class="sort-designation_name"><%= @department.name %></td>
+          <td class="actions">
+          <% if policy(:Designation).read? %>
+          <%= link_to department_designations_path(department_id: @department.id) do%>
+              <i class="fa fa-eye"></i>
+            <% end %>
+          <%end%>
+          <% if policy(:Designation).update? %>
+            <%= link_to edit_department_path(@department) do %>
+              <i class="fa fa-edit"></i>
+            <% end %>
+          <% end %>
+          <% if policy(:Designation).delete? %>
+            <%= link_to department_path(@department), data: {turbo_method: :delete  , turbo_confirm: 'Are you sure?'} do %>
+              <i class="fa fa-trash"></i>
+            <% end %>
+          <% end %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

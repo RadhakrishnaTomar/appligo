@@ -1,0 +1,94 @@
+<div class="page-wrapper">
+  <!-- Page body -->
+  <div class="page-body">
+    <div class="container-xl">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">edit member</h3>
+        </div>
+        <%= form_for @team_member, local:true, url: @url, data: { turbo: false },class: "card" ,method: :patch do |f| %>
+        <div class="card-body">
+          <div class="row row-cards">
+            <%@team_member.errors.full_messages_for(:name).each do |message| %>
+            <div><%= message %></div>
+            <%end%>
+            <div class="col-md-5">
+              <div class="mb-3">
+                <%= f.label :name, class: "form-label" %>
+                <%= f.text_field :name, :placeholder => "Name" , class: "form-control"%> 
+              </div>
+            </div>              
+  
+            <%@team_member.errors.full_messages_for(:profile).each do |message| %>
+            <div><%= message %></div>
+            <%end%>
+            <div class="col-md-5">
+              <div class="mb-3">
+                <%= f.label :profile, class: "form-label" %>
+                <%= f.text_field :profile, :placeholder => "Profile", class: "form-control" %> 
+              </div>
+            </div>              
+
+            <%@team_member.errors.full_messages_for(:employee_id).each do |message| %>
+            <div><%= message %></div>
+            <%end%>
+            <div class="col-md-5">
+              <div class="mb-3">
+                <%= f.label :employee_id, class: "form-label" %>
+                <%= f.text_field :employee_id, :placeholder => "employeeID" , class: "form-control" %> 
+              </div>
+            </div>              
+
+            <%@team_member.errors.full_messages_for(:email).each do |message| %>
+            <div><%= message %></div>
+            <%end%>
+            <div class="col-md-5">
+              <div class="mb-3">
+                <%= f.label :email, class: "form-label" %>
+                <%= f.text_field :email, :placeholder => "email" , class: "form-control" %> 
+              </div>
+            </div>              
+
+            <%@team_member.errors.full_messages_for(:role_id).each do |message| %>
+            <div><%= message %></div>
+            <%end%>
+            <div class="col-md-5">
+              <div class="mb-3">
+                <%= f.label :role_id, class: "form-label" %>
+                <%= f.text_field :role_id, :placeholder => "Role" , class: "form-control" %> 
+              </div>
+            </div>              
+
+            <%@team_member.errors.full_messages_for(:contact_number).each do |message| %>
+            <div><%= message %></div>
+            <%end%>
+            <div class="col-md-5">
+              <div class="mb-3">
+                <%= f.label :contact_number, class: "form-label" %>
+                <%= f.text_field :contact_number, :placeholder => "contact number" , class: "form-control" %> 
+              </div>
+            </div>              
+
+            <%@team_member.errors.full_messages_for(:password).each do |message| %>
+            <div><%= message %></div>
+            <%end%>
+            <div class="col-md-5">
+              <div class="mb-3">
+                <%= f.label :password, class: "form-label" %>
+                <%= f.password_field :password, :placeholder => "password" , class: "form-control" %> 
+              </div>
+            </div>              
+          </div>
+        </div> 
+     
+
+        
+        <div class="card-footer text-end">    
+          <%= f.submit "Update", class: "btn btn-primary" %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+

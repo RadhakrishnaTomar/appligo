@@ -1,0 +1,13 @@
+<h1><%= @subscription.plan.name %> Subscription</h1>
+
+<div class="card">
+  <div class="card-body">
+    <p>Company: <%= @subscription.company_id %></p>
+    <p>Subscribed App: <%= @subscription.subscribed_app %></p>
+    <p>Start Date: <%= @subscription.start_date %></p>
+    <p>End Date: <%= @subscription.end_date %></p>
+  </div>
+</div>
+
+<%= link_to "Edit", edit_subscription_path(@subscription), class: "btn btn-primary" %>
+<%= link_to "Delete", @subscription, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>

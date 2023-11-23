@@ -1,0 +1,48 @@
+<div class="page-wrapper">
+  <!-- Page header -->
+  <div class="page-header d-print-none">
+    <div class="container-xl">
+      <div class="row g-2 align-items-center">
+        <div class="col">
+          <h2 class="page-title">
+            Designation Details
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Page body -->
+  <div class="page-body">
+    <div class="container-xl">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Base info</h3>
+          <div class="col-auto ms-auto d-print-none">
+            <div class="btn-list">
+
+              <% if policy(:Designation).update? %>
+                <%= link_to edit_department_designation_path, class: "text-warning" do %>
+                  <i class="fa fa-edit"></i>
+                <% end %>
+              <% end %>
+              <% if policy(:Designation).delete? %>
+                <%= link_to department_designation_path(@designation), data: {turbo_method: :delete  , turbo_confirm: 'Are you sure?'}, class: "text-danger" do %>
+                  <i class="fa fa-trash"></i>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="datagrid">
+            <div class="datagrid-item">
+              <div class="datagrid-title">Name</div>
+              <div class="datagrid-content"><%= @designation.name %></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

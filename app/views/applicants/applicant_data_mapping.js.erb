@@ -1,0 +1,16 @@
+<% @sorting_n = @rejected_data.gsub(/[\n]+/, '-')%>
+<% @final_output = @sorting_n.gsub(/[|@|]+/, 'AA')%>
+// console.log("<%#@final_output%>")
+$(".button_to input[name='rejected_data']").val('<%= @final_output %>');
+
+$("#exampleModal .modal-header").html("Your file has been uploaded, please click button to download CSV")
+
+$("#exampleModal .modal-body").html("<form class='button_to' method='post' action='/applicant_upload_bulk/rejected'><button class='btn btn-primary' id='rejected_applicants' type='submit'>download rejected applicant</button><input type='hidden' name='rejected_data' value='<%= @final_output %>' autocomplete='off'></form>")
+
+$("#exampleModal .modal-footer").html("<button type='button' class='btn btn-secondary' data-bs-dismiss='modal', id='filled_close_btn'>Close</button>")
+
+$('#exampleModal').modal({ backdrop: 'static', keyboard: false, show: true }); 
+
+document.getElementById("filled_close_btn").onclick = function(){
+  location.reload();
+}

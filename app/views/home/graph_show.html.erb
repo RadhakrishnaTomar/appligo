@@ -1,0 +1,263 @@
+<div class="card">
+  <div class="row">
+    <div class="col">
+      <div class="element.style ">
+        <canvas id='interviewChart'></canvas>
+        <canvas id="showchart"></canvas>  
+      </div>
+    </div>
+    <div class="col">
+      <canvas id="myChart"></canvas>
+      <canvas id ="chart3"></canvas>
+    </div>
+  </div>
+</div>
+
+<script>
+  var months = ["January", "February", "March", "April", "May", "June", "July"];
+  var xValues = months.slice(0, 5);
+  var yValues = [54, 49, 44, 24, 15, 0, 0];
+  var barColors = [
+  "#b91d47",
+  "#F88FB2",
+  "#2b5797",
+  "#e8c3b9",
+  "#1e7145",
+  "#ff5733",
+  "#77C2FE"
+  ];
+
+  new Chart("chart2", {
+  type: "bar",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues,
+      barPercentage: 0.3,
+    }]
+  },
+  options: {
+    title: {
+      display: true,
+      text: "Applicants Record per month",
+      color: '#e8c3b9',
+    },
+  }
+  });
+
+  var xValues2 = ["January", "February", "March", "April", "May", "June", "July"];
+  var yValues2 = [54, 49, 44, 24, 15, 75]; 
+  var barColors =[
+  "#E65F8E",
+  "#A86BD1",
+  "#3AA5D1",
+  "#3BB58F",
+  "#3A63AD",
+  "#82C272",
+  "#FF6F50"
+  ];
+  new Chart("chart3", {
+    type: "bar",
+    data: {
+      labels: xValues2,
+      datasets: [{
+        backgroundColor: barColors,
+        data: yValues2,
+        barPercentage: 0.3,
+      }]
+    },
+  xoptions: {
+    title: {
+      display: true,
+      text: "Applicants Record per month",
+      color: '#e8c3b9',
+    },
+  }
+  });
+
+  var xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
+  var yValues = [55, 49, 44, 24, 15];
+  var barColors = [
+    'Red',
+    'Blue',
+    'Yellow',
+    "green"
+  ];
+  new Chart("myChart", {
+    type: "pie",
+    data: {
+      labels: xValues,
+      datasets: [{
+        backgroundColor: barColors,
+        pointHoverBackgroundColor: "#fff",
+        data: yValues
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: "World Wide Wine Production 2018"
+      }
+    }
+  });
+
+  var ctxShow = document.getElementById('showchart');
+  var myChartShow;
+    function fetchShowData() {
+      $.ajax({
+        url: '/interviews/show_data',
+        method: 'GET',
+        dataType: 'json',
+        success: function (show_data) {
+          updateShowChart(show_data);
+        },
+        error: function (error) {
+          console.error('Error fetching show_data:', error);
+        },
+      });
+    }
+
+    function updateShowChart(show_data) { 
+      var labels = Object.keys(show_data);
+      var values = Object.values(show_data);
+
+      if (myChartShow) {
+        myChartShow.data.labels = labels;
+        myChartShow.data.datasets[0].data = values;
+        myChartShow.update();
+      } else {
+        myChartShow = new Chart(ctxShow, {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                data: values,
+                label: 'Last one months record',
+                pointBackgroundColor: "#308af3",
+                borderColor:"green",
+                pointBorderWidth: 2,
+                spanGaps: true,
+                fill:false,
+                borderColor:"#308af3",
+                pointHoverBackgroundColor:"#fff",
+                pointHoverBorderWidth: 2,
+                tension: 0.05
+        
+              }]
+          },
+          options: {
+            scales: {
+              xAxes: [{
+                ticks: {
+                  callback: function (value, index, values) {
+                    var day = parseInt(value.split("-")[0], 10);
+                    var getOrdinalSuffix = function (number) {
+                      if (number >= 11 && number <= 13) {
+                        return 'th';
+                      }
+                      var lastDigit = number % 10;
+                      switch (lastDigit) {
+                        case 1:
+                          return 'st';
+                        case 2:
+                          return 'nd';
+                        case 3:
+                          return 'rd';
+                        default:
+                          return 'th';
+                      }
+                    };
+                    return day + getOrdinalSuffix(day) + "-" + value.split("-")[1];
+                  }
+                },
+                 gridLines: { display:false },
+              }],
+              yAxes: [{
+                ticks: { min: 0, max: 10, stepSize: 1}
+              }]
+            }
+          }
+        });
+      }
+    }
+  fetchShowData();
+</script>
+<script>
+  var ctx = document.getElementById('interviewChart').getContext('2d');
+  var myChart;
+  function fetchData() {
+    $.ajax({
+      url: '/interviews/data',
+      method: 'GET',
+      dataType: 'json',
+      success: function (datad) {
+        updateChart(datad);
+      },
+      error: function (error) {
+        console.error('Error fetching data:', error);
+      },
+    });
+  }
+  function updateChart(data) {
+    var labels = Object.keys(data);
+    var values = Object.values(data);
+
+    if (myChart) {
+      myChart.data.labels = labels;
+      myChart.data.datasets[0].data = values;
+      myChart.update();
+    } else {
+      myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+           labels: labels,
+          datasets: [
+            {
+              label: 'Upcomping schedule interviews',
+              data: values,
+              backgroundColor:"#48ba16",
+              borderColor: "#FF6F50",
+              barPercentage: 0.5,
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+              xAxes: [{
+        ticks: {
+          callback: function(value, index, values) {
+            var day = parseInt(value.split("-")[0], 10);
+            var getOrdinalSuffix = function(number) {
+              if (number >= 11 && number <= 13) {
+                return 'th';
+              }
+              var lastDigit = number % 10;
+              switch (lastDigit) {
+                case 1:
+                  return 'st';
+                case 2:
+                  return 'nd';
+                case 3:
+                  return 'rd';
+                default:
+                  return 'th';
+              }
+            };
+            return day + getOrdinalSuffix(day) + "-" + value.split("-")[1];
+          }
+        },
+      }],
+        yAxes: [{
+          ticks: { min: 0, max: 10, stepSize:2}
+        }]
+          }
+        }
+      });
+    } 
+  }
+  fetchData();
+</script> 
+

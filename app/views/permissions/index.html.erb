@@ -1,0 +1,20 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-10">
+      <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Permissions</h1>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="d-sm-flex align-items-center justify-content-between mb-4" data-company_id = <%= params[:company_id] %> >
+        <%= select_tag(:role, options_for_select(@companies_role, @role), class: "form-control", id: "roles-dropdown") %>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive shadow" id="replasable-tbody">
+    <%= render partial: "table_tbody"%>
+  </div>
+</div>
+
+

@@ -1,0 +1,56 @@
+  .page-wrapper {
+    padding: 20px;
+  }
+
+  .page-header {
+    margin-bottom: 20px;
+  }
+
+  .page-title {
+    margin: 0;
+    font-size: 24px;
+  }
+
+  .btn-list {
+    display: inline-block;
+  }
+
+  .page-body {
+    margin-bottom: 20px;
+  }
+
+  .card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+  }
+
+  #table-default {
+    overflow-x: auto;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  th button {
+    background-color: transparent;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .sort-name {
+    width: 70%;
+  }
+
+  .actions {
+    white-space: nowrap;
+  }

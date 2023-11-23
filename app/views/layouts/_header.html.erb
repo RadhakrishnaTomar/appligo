@@ -1,0 +1,110 @@
+<% if team_member_signed_in? && !current_company.on_board?%>
+  <!-- Sidebar -->
+  <ul class="navbar-nav bg-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <!-- Sidebar - Brand -->
+    <%= link_to root_path, class: "sidebar-brand d-flex align-items-center justify-content-center" do %>
+      <div class="sidebar-brand-icon">
+        <%= image_tag "small-logo-white.png", width: "30" %>
+      </div>
+      <div class="sidebar-brand-text mx-3">
+        <%= image_tag "logo-white-back.png", width: "100" %>
+      </div>
+    <% end %>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+    <li class="nav-item <%= 'active' if current_page?(home_graph_show_path) %>">
+      <%= link_to home_graph_show_path, class: "nav-link" do %>
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Dashboard</span>
+      <% end %>
+    </li>
+    <div class="sidebar-heading">Operations</div>
+    <% if policy(:Applicant).read? %>
+    <li class="nav-item <%= 'active' if current_page?(applicants_path) %>">
+      <%= link_to applicants_path, class: "nav-link" do %>
+        <i class="fas fa-people-arrows"></i>
+        <span>Applicants</span>
+      <% end %>
+    </li>
+    <%end%>
+    <% if policy(:Interview).read? %>
+    <li class="nav-item <%= 'active' if current_page?(assigned_interviews_path(current_team_member)) %>">
+      <%= link_to assigned_interviews_path(current_team_member), class: "nav-link" do %>
+        <i class="fas fa-fw fa-chalkboard-teacher"></i>
+        <span>Assigned Interviews</span>
+      <% end %>
+    </li>
+    <%end%>
+
+    <div class="sidebar-heading">Configurations</div>
+
+    <% if policy(:Department).read? %>
+      <li class="nav-item <%= 'active' if current_page?(departments_path) %>">
+        <%= link_to departments_path, class: "nav-link" do %>
+          <i class="fas fa-fw fa-building"></i>
+          <span>Departments</span>
+        <% end %>
+      </li>
+    <% end %>
+    <% if policy(:TeamMember).read? %>
+    <li class="nav-item <%= 'active' if current_page?(team_members_path) %>">
+      <%= link_to team_members_path, class: "nav-link" do %>
+        <i class="fas fa-fw fa-users"></i>
+        <span>Team Members</span>
+      <% end %>
+    </li>
+    <%end%>
+
+    <% if policy(:Permission).read? %>
+    <li class="nav-item <%= 'active' if current_page?(company_permissions_path(current_team_member.company_id)) %>">
+      <%= link_to company_permissions_path(current_team_member.company_id), class: "nav-link" do %>
+        <i class="fas fa-fw fa-lock"></i>
+        <span>Permissions</span>
+      <%end%>
+    </li>
+    <%end%>
+    <%if policy(:Profile).read?%>
+      <li class="nav-item <%= 'active' if current_page?(profiles_path) %>">
+        <%= link_to profiles_path, class: "nav-link" do %>
+         <i class="fas fa-fw fa-building"></i>
+          <span>Profiles</span>
+        <% end %>
+      </li>
+    <%end%>
+    <%if policy(:Role).read?%>
+      <li class="nav-item <%= 'active' if current_page?(roles_path) %>">
+        <%= link_to roles_path, class: "nav-link" do %>
+         <i class="fas fa-user-cog"></i>
+          <span>Roles</span>
+        <% end %>
+      </li>
+    <%end%>
+    <li class="nav-item <%= 'active' if current_page?(subscriptions_path) %>">
+      <%= link_to subscriptions_path, class: "nav-link" do %>
+       <i class="fas fa-user-cog"></i>
+        <span>Subscriptions</span>
+      <% end %>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+      <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+  </ul>
+<%else%>
+  <ul class="navbar-nav bg-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <!-- Sidebar - Brand -->
+    <%= link_to root_path, class: "sidebar-brand d-flex align-items-center justify-content-center" do %>
+      <div class="sidebar-brand-icon">
+        <%= image_tag "small-logo-white.png", width: "30" %>
+      </div>
+      <div class="sidebar-brand-text mx-3">
+        <%= image_tag "logo-white-back.png", width: "100" %>
+      </div>
+    <% end %>
+  </ul>
+<% end %>

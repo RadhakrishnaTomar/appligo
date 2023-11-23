@@ -1,0 +1,62 @@
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Team Members</h1>
+    <% if policy(:TeamMember).create? %>
+      <%= link_to new_team_member_path, class: "d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split shadow-sm" do %>
+        <span class="icon text-white-50">
+          <i class="fas fa-user-plus fa-sm"></i>
+        </span>
+        <span class="text">New Team Member</span>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="table-responsive shadow">
+    <table class="table table-bordered table-go">
+      <thead>
+        <tr>
+          <th>Employee ID</th>
+          <th>Name</th>
+          <th>Role</th>
+          <th>Email</th>
+          <th>contact number</th>
+          <th>Profile</th>   
+          <th>Action</th>              
+        </tr>
+      </thead>
+      <tbody class="table-tbody">
+        <% @team_members.each do |team_member| %>
+        <tr>
+          <td class="sort-designation_name"><%=team_member.employee_id%></td>
+          <td class="sort-contact_number"><%=team_member.name%></td>
+          <td class="sort-email"><%=team_member.role.name%></td>
+          <td class="sort-location"><%=team_member.email%></td>
+          <td class="sort-last_salary"><%=team_member.contact_number%></td>
+          <td class="sort-last_salary"><%=team_member.profile%></td>
+
+          <td class="actions">
+            <% if policy(:TeamMember).read? %>
+              <%= link_to team_member_path(team_member.id) do %>
+                <i class="fa fa-eye"></i>
+              <% end %>
+            <% end %>
+
+            <% if policy(:TeamMember).update? %>
+              <%= link_to  edit_team_member_path(team_member), class: "text-warning" do %>
+                <i class="fa fa-edit"></i>
+              <% end %>
+            <% end %>
+
+            <% if policy(:TeamMember).delete? %>
+              <%= link_to  delete_member_path(team_member), data: {turbo_method: :delete  , turbo_confirm: 'Are you sure?'}, class: "text-danger" do %>
+                <i class="fa fa-trash"></i>
+              <% end %>
+            <% end %>
+          </td> 
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

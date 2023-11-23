@@ -1,0 +1,61 @@
+  .card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    width: auto;
+  }
+
+  .card-header {
+    background-color: #f1f1f1;
+    padding: 10px;
+  }
+
+  .card-title {
+    margin: 0;
+  }
+
+  .card-body {
+    padding: 10px;
+  }
+
+  .datagrid-item {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+  }
+
+  .datagrid-title {
+    font-weight: bold;
+  }
+
+  .datagrid-content {
+    margin-left: 10px;
+  }
+
+  .badge {
+    padding: 5px;
+    border-radius: 3px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  th button {
+    background-color: transparent;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .page-title {
+   margin-left: 10px;
+  }

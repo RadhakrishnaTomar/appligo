@@ -1,0 +1,28 @@
+<h3> Company Registration</h3></br>
+<%= form_with model: @company, url: registration_path(@company) do |form| %>
+<%= form.label :Company_name%>
+<%= form.text_field :name%><br>
+
+
+<%= form.label :Company_location%>
+<%= form.text_field :location%><br>
+
+<%= form.fields_for :team_members do |tm_form| %>
+<%= tm_form.label :User_name%>
+<%= tm_form.text_field :name%><br>
+
+
+<%= tm_form.label :Email_ID%>
+<%= tm_form.text_field :email%><br>
+
+<%= tm_form.label :Designation%>
+<%= tm_form.text_field :designation%><br>
+
+<%= tm_form.label :Password%>
+<%= tm_form.text_field :password%><br>
+
+<%= hidden_field_tag "company[team_members_attributes][0][role_id]", Role.where(name: "Admin").first.id%>
+<%end%>
+
+<%= form.submit %>
+<%end%>

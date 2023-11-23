@@ -1,0 +1,187 @@
+<div class="container-fluid">
+  <div class="card shadow mb-4">
+    <!-- Card Header - Dropdown -->
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+      <h6 class="m-0 font-weight-bold text-primary">Applicant</h6>
+    </div>
+    <!-- Card Body -->
+    <%= form_with(model: @applicant, local: true, class: "card",data: { turbo: false }) do |f| %>
+      <div class="card-body">
+        <div class="row row-cards">
+          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">            
+                      
+            <div class="mb-3">
+              <%= f.label :designation_name, class: "form-label" do %>
+                Profile
+                <% @applicant.errors.full_messages_for(:designation_name).each do |message| %>
+                  <span class="text-danger text-sm-start fst-italic"><%= message %></span>
+                <%end%>
+              <% end %>
+              <%= f.select :designation_name, options_for_select(profile_dropdown(current_company.id), @applicant.designation_name), { prompt: 'Select a Profile' }, class: 'form-control', id: 'profile-dropdown' %>
+            </div>
+          
+            <div class="mb-3">
+              <%= f.label :name, class: "form-label" do %>
+                Name
+                <% @applicant.errors.full_messages_for(:name).each do |message| %>
+                  <span class="text-danger text-sm-start fst-italic"><%= message %></span>
+                <%end%>
+              <% end %>
+              <%= f.text_field :name, :placeholder => "Name", class: "form-control" %> 
+            </div>
+          
+            <div class="mb-3">
+              <%= f.label :contact_number, class: "form-label" do %>
+                Contact Number
+                <% @applicant.errors.full_messages_for(:contact_number).each do |message| %>
+                  <span class="text-danger text-sm-start fst-italic"><%= message %></span>
+                <%end%>
+              <% end %>
+              <%= f.text_field :contact_number, :placeholder => "Contact number" , class: "form-control" %> 
+            </div>
+            
+          
+            <div class="mb-3">
+              <%= f.label :email, class: "form-label" do %>
+                Email
+                <% @applicant.errors.full_messages_for(:email).each do |message| %>
+                  <span class="text-danger text-sm-start fst-italic"><%= message %></span>
+                <%end%>
+              <% end %>
+              <%= f.text_field :email, :placeholder => "email" , class: "form-control" %> 
+            </div>
+            
+            <div class="mb-3">
+              <%= f.label :location,value: "current location", class: "form-label" do %>
+                Location
+                <% @applicant.errors.full_messages_for(:location).each do |message| %>
+                  <span class="text-danger text-sm-start fst-italic"><%= message %></span>
+                <%end%>
+              <% end %>
+              <%= f.text_field :location, :placeholder => "location" , class: "form-control" %> 
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :remark, class: "form-label" do %>
+                Remark
+                <% @applicant.errors.full_messages_for(:remark).each do |message| %>
+                  <span class="text-danger text-sm-start fst-italic"><%= message %></span>
+                <%end%>
+              <% end %>
+              <%= f.text_field :remark, :placeholder => "remark" , class: "form-control" %> 
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :hometown, class: "form-label" do %>
+                HomeTown
+                <% @applicant.errors.full_messages_for(:hometown).each do |message| %>
+                  <span class="text-danger text-sm-start fst-italic"><%= message %></span>
+                <%end%>
+              <% end %>
+              <%= f.text_field :hometown, :placeholder => "hometown" , class: "form-control" %> 
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :last_company, class: "form-label" do %>
+                Last/Current Company
+                <% @applicant.errors.full_messages_for(:last_company).each do |message| %>
+                  <span class="text-danger text-sm-start fst-italic"><%= message %></span>
+                <%end%>
+              <% end %>
+              <%= f.text_field :last_company, :placeholder => "last/current company" , class: "form-control" %> 
+            </div>
+          </div> 
+
+          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"> 
+            <div class="mb-3">
+              <%= f.label :current_ctc,value: "current/last salary" ,class: "form-label" do %>
+               Current Ctc
+                <% @applicant.errors.full_messages_for(:current_ctc).each do |message| %>
+                  <span class="text-danger text-sm-start fst-italic"><%= message %></span>
+                <%end%>
+              <% end %>
+              <%= f.text_field :current_ctc, :placeholder => "current Ctc" , class: "form-control" %>
+            </div>
+            
+            <div class="mb-3">
+              <%= f.label :expected_ctc, class: "form-label" do %>
+                Expected CTC
+                <% @applicant.errors.full_messages_for(:expected_ctc).each do |message| %>
+                  <span class="text-danger text-sm-start fst-italic"><%= message %></span>
+                <%end%>
+              <% end %>
+              <%= f.text_field :expected_ctc, :placeholder => "expected CTC" , class: "form-control" %>
+            </div>
+          
+            <div class="mb-3">
+              <%= f.label :notice_period,value: "Notice period in days", class: "form-label" do %>
+                Notice Period
+                <% @applicant.errors.full_messages_for(:notice_period).each do |message| %>
+                  <span class="text-danger text-sm-start fst-italic"><%= message %></span>
+                <%end%>
+              <% end %>
+              <%= f.text_field :notice_period, :placeholder => "notice period in days" , class: "form-control"  , :step => "0.01"%> 
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :open_for, class: "form-label" do %>
+                Open For
+                <% @applicant.errors.full_messages_for(:open_for).each do |message| %>
+                  <span class="text-danger text-sm-start fst-italic"><%= message %></span>
+                <%end%>
+              <% end %>
+              <%= f.select :open_for, options_for_select([['Work From Home','home'], ['Work From Office','office'], ["Anywhere","anywhere"]]), {}, class: "form-control" %>
+            </div>              
+                      
+            <div class="mb-3">
+              <%= f.label :source, class: "form-label" do %>
+                Source
+                <% @applicant.errors.full_messages_for(:source).each do |message| %>
+                  <span class="text-danger text-sm-start fst-italic"><%= message %></span>
+                <%end%>
+              <% end %>
+              <%= f.text_field :source, :placeholder => "source" , class: "form-control" %> 
+            </div>
+               
+            <div class="mb-3">
+              <%= f.label :experience, class: "form-label" do %>
+                Experience
+                <% @applicant.errors.full_messages_for(:experience).each do |message| %>
+                  <span class="text-danger text-sm-start fst-italic"><%= message %></span>
+                <%end%>
+              <% end %>
+              <%= f.text_field :experience, :placeholder => "experience" , class: "form-control" %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :relevant_expereince, class: "form-label" do %>
+                Relevant Expereince
+                <% @applicant.errors.full_messages_for(:relevant_expereince).each do |message| %>
+                  <span class="text-danger text-sm-start fst-italic"><%= message %></span>
+                <%end%>
+              <% end %>
+              <%= f.text_field :relevant_expereince, :placeholder => "Relevant Experience" , class: "form-control" %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :reason, class: "form-label" do %>
+                Reason For Job Change
+                <% @applicant.errors.full_messages_for(:reason).each do |message| %>
+                  <span class="text-danger text-sm-start fst-italic"><%= message %></span>
+                <%end%>
+              <% end %>
+              <%= f.text_field :reason, :placeholder => "reason For job change" , class: "form-control" %>
+            </div>
+
+          </div>              
+        </div>
+      </div>
+    
+      <div class="card-footer text-end">
+        <%= f.submit class: "d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" do %>
+          <i class="fas fa-plus fa-sm text-white-50"></i>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Applicants</h1>
+    <div class="d-none d-sm-inline-block">
+      <% if policy(:BulkUpload).create? %>
+        <%= link_to applicant_upload_bulk_new_path, class: "btn btn-sm btn-primary btn-icon-split shadow-sm" do %>
+          <span class="icon text-white-50">
+            <i class="fas fa-upload fa-sm"></i>
+          </span>
+          <span class="text">Bulk Upload</span>
+        <% end %>
+      <% end %>
+      <% if policy(:Applicant).create? %>
+        <%= link_to new_applicant_path, class: "btn btn-sm btn-primary btn-icon-split shadow-sm" do %>
+          <span class="icon text-white-50">
+            <i class="fas fa-user-plus fa-sm"></i>
+          </span>
+          <span class="text">New Applicant</span>
+        <% end %>
+      <%end%>
+    </div>
+  </div>
+
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="collapse" id="all_profile_data" data-value="All" role="button" aria-expanded="false" aria-controls="collapseExample" data-controller="applicant-profile">
+      All
+    </a>
+    </li>
+    <% profiles = current_company.profiles.each do |profile| %>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="collapse" id="<%= profile.name.gsub(" ", "_").downcase %>" data-value="<%= profile.id %>" role="button" aria-expanded="false" aria-controls="collapseExample" data-controller="applicant-profile" >
+      <%= profile.name %>
+    </a>
+    </li>
+    <% end %>
+  </ul>
+  <turbo-frame id="applicant_profile_wise">
+    <div class="table-responsive shadow">
+      <%= render "applicant_index"%>
+    </div>
+  </turbo-frame>
+</div>

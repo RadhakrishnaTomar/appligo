@@ -1,0 +1,53 @@
+</table>
+<div class="page-wrapper">
+  <!-- Page header -->
+  <div class="page-header d-print-none">
+    <div class="container-xl">
+      <div class="row g-2 align-items-center">
+        <div class="col">
+          <h2 class="page-title">
+            Interviews
+          </h2>
+        </div>
+        <!-- Page title actions -->
+        <div class="col-auto ms-auto d-print-none">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Page body -->
+  <div class="page-body">
+    <div class="container-xl">
+      <div class="card">
+        <div class="card-body">
+          <div id="table-default" class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th><button>Title</button></th>
+                  <th><button>Interviewer</button></th>
+                  <th><button>Applicant Name</button></th>
+                  <th><button>Status</button></th>
+                  <th><button>Interview Date</button></th>
+                  <th><button>Comment</button></th>                                                      
+                </tr>
+              </thead>
+              <tbody class="table-tbody">
+                <% @interviews.each do |interview| %>
+                <tr>
+                  <td class="sort-name"><%= interview.title %></td>
+                  <td class="sort-name"><%= TeamMember.find(interview.team_member_id).name %></td>
+                  <td class="sort-name"><%= Applicant.find(interview.applicant_id).name %></td>
+                  <td class="sort-name"><%= interview.status %></td>
+                  <td class="sort-name"><%= interview.interview_date.strftime("%d-%m-%Y %I:%M %p") %></td>
+                  <td class="sort-name"><%= interview.comments.pluck(:content).join(" ")%></td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

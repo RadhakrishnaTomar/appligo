@@ -1,0 +1,26 @@
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Available All Plans</h1>
+  </div>
+
+  <div class="row">
+    <% @plans.each do |plan| %>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><strong><%= plan.name %></strong></h5>
+            <p class="card-text"><%= plan.description %></p>
+            <p class="card-text"><strong>Price per Year:</strong><%= number_to_currency(plan.price_per_year, unit: '₹', format: '%u%n') %></p>
+            <p class="card-text"><strong>Active Features:</strong> <%= plan.active_features.join(', ') %></p>
+            <% if plan.name == 'Basic' %>
+              <%= link_to "Subscribed", new_subscription_path(plan_id: plan.id, company_id: current_company.id), class: "btn #{plan.name == 'Basic' ? 'btn-success' : 'btn-primary'}", data: { disable_with: "Processing..." }, disabled: true %>
+            <% else %>
+              <%= link_to "Contact US", new_subscription_path(plan_id: plan.id), class: "btn btn-primary", data: { disable_with: "Processing..." }, disabled: true %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

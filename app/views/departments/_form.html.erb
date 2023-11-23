@@ -1,0 +1,30 @@
+<div class="container-fluid">
+  <div class="card shadow mb-4">
+    <!-- Card Header - Dropdown -->
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+      <h6 class="m-0 font-weight-bold text-primary">Edit Department</h6>
+    </div>
+    <!-- Card Body -->
+    <%= form_with model: @department, local:true, url: @url, class: "card" do |form| %>
+      <div class="card-body">
+        <div class="row row-cards">
+          <%@department.errors.full_messages_for(:name).each do |message| %>
+            <div><%= message %></div>
+          <%end%>
+          <div class="col-md-5">
+            <div class="mb-3">
+              <%= form.label :name, class: "form-label" %>
+              <%= form.text_field :name, class: "form-control", placeholder: "Enter Department Name" %>                  
+            </div>
+          </div>              
+        </div>
+      </div>
+    
+      <div class="card-footer text-end">
+        <%= form.submit class: "d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" do %>
+          <i class="fas fa-plus fa-sm text-white-50"></i>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
